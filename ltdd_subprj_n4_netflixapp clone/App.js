@@ -12,6 +12,7 @@ import MoreScreen from './Screens/MorePages/MoreScreen'
 import IntroScreen from './Screens/IntroPage/IntroScreen'
 import PeopleDetails from './Screens/PeoplePages/PeopleScreenDetails'
 import MyListScreen from './Screens/MyListPages/MyListScreen'
+import PeopleScreen from './Screens/PeoplePages/PeopleScreen';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -24,7 +25,7 @@ export default function App() {
         }}
         initialRouteName="Home">
         {/* 
-         <Stack.Screen name="IntroScreen" component={IntroScreen}/>
+        <Stack.Screen name="IntroScreen" component={IntroScreen}/>
         <Stack.Screen name="Sign Up" component={SignUpScreen}/>
         <Stack.Screen name="LoginScreen" component={LoginScreen}/> 
         <Stack.Screen name="MoreScreen" component={MoreScreen}/>
@@ -35,9 +36,10 @@ export default function App() {
         <Stack.Screen name="HomeScreenDetails" component={HomeScreenDetails}/>
         <Stack.Screen name="MyListScreen" component={MyListScreen}/> 
         */}
-        <Stack.Screen name="MoreScreen" component={MoreScreen}/>
         <Stack.Screen name="HomeScreen" component={HomeScreen}/>
-        <Stack.Screen name="MyListScreen" component={MyListScreen}/> 
+        <Stack.Screen name="TV" component={TV}/>
+        <Stack.Screen name="People" component={PeopleScreen}/>
+        <Stack.Screen name="CommingTrending" component={CommingTrending}/> 
       </Stack.Navigator>
     </NavigationContainer>
   );

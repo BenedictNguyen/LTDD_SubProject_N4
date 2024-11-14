@@ -94,9 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '100%',
-    height: '100%',
-    marginTop: 50
+    padding: 12
   },
   header: {
     flexDirection: 'row',
@@ -116,8 +114,9 @@ const styles = StyleSheet.create({
   body: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
+    width: '50%',
     height: 500,
+    padding: 12
   },
   subBody: {
     justifyContent: 'space-between',
@@ -144,8 +143,7 @@ const styles = StyleSheet.create({
   textInput: {
     width: '100%',
     height: '100%',
-    color: '#000',
-    outline: 'none'
+    outlineStyle: 'none',
   },
   errorText: {
     color: 'red',

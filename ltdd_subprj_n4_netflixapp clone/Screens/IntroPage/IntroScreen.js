@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { Video } from 'expo-av';
 import { useNavigation } from '@react-navigation/native';
+
+const { width, height } = Dimensions.get('window');
 
 const IntroScreen = () => {
   const [showLogo, setShowLogo] = useState(true);
@@ -55,15 +57,13 @@ const styles = StyleSheet.create({
   },
   video: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    width: width,
+    height: height,
   },
   logoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 1, // Ensures logo and button are above the video
+    zIndex: 1,
   },
   logo: {
     width: 150,

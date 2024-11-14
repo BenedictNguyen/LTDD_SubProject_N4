@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   signInContainer: {
     justifyContent: 'space-around',
     alignItems: 'center',
-    width: '100%',
+    width: '30%',
     paddingVertical: 20,
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     borderRadius: 8,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     color: 'white',
     width: '100%',
     height: '100%',
-    outline: 'none'
+    outlineStyle: 'none'
   },
   signInButton: {
     width: '90%',
