@@ -7,6 +7,8 @@ import { useNavigation } from "@react-navigation/native";
 export default function MyList() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,50 +24,72 @@ export default function MyList() {
     fetchData();
   }, []);
 
+  // Hàm xóa dữ liệu
+  const deleteItem = async (id) => {
+    try {
+      // Gửi yêu cầu DELETE đến API
+      await axios.delete(`https://671988e77fc4c5ff8f4dafcc.mockapi.io/api/${id}`);
+
+      // Cập nhật lại state, loại bỏ mục đã xóa
+      setData((prevData) => prevData.filter(item => item.id !== id));
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
+  };
+
   const renderItem = ({ item }) => (
     <View style={styles.listFilmContainer}>
       <Image source={{ uri: item.image }} style={styles.image} />
-        <View style={styles.filmsInfo}>
-          <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.title}>{item.release_date}</Text>
-        </View>
-      <TouchableOpacity style={{borderWidth: 1, borderColor: 'white', borderRadius:50, width: 30, height: 30, justifyContent:'center', alignItems: 'center' }}> 
-        <Icon name='play-arrow' size={24} color='white'/>
-      </TouchableOpacity>
-    </View> 
+      <View style={styles.filmsInfo}>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.title}>{item.release_date}</Text>
+      </View>
+      <View style={styles.groupButton}>
+        <TouchableOpacity
+          style={styles.button}
+        >
+          <Icon name='play-arrow' size={24} color='white' />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => deleteItem(item.id)}  // Xử lý sự kiện xóa
+        >
+          <Icon name='delete' size={24} color='white' />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 
-  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-    {/* Header */}
+      {/* Header */}
       <View style={styles.header}>
         <View style={styles.groupTitle}>
-          <TouchableOpacity onPress={()=>navigation.navigate('HomeScreen')}>
-            <Icon name='arrow-back' size={24} color='white'/>
+          <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+            <Icon name='arrow-back' size={24} color='white' />
           </TouchableOpacity>
           <Text style={styles.titleScreen}>My List</Text>
         </View>
         <TouchableOpacity>
-          <Icon name='edit' size={24} color='white'/>
+          <Icon name='edit' size={24} color='white' />
         </TouchableOpacity>
       </View>
-    
-    {/* Nav Bar */}
+
+      {/* Nav Bar */}
       <View style={styles.navBar}>
-          <TouchableOpacity>
-            <Text style={styles.navBarTitle}>Haven Started</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.navBarTitle}>TV Shows</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.navBarTitle}>Movies</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.navBarTitle}>People</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity>
+          <Text style={styles.navBarTitle}>Haven Started</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.navBarTitle}>TV Shows</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.navBarTitle}>Movies</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.navBarTitle}>People</Text>
+        </TouchableOpacity>
+      </View>
 
       {loading ? (
         <ActivityIndicator size="large" color="#fff" />
@@ -85,11 +109,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000',
-    marginTop: 20,
+    marginTop: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 10,
-    paddingRight: 10
+    paddingLeft: 12
   },
   header: {
     flexDirection: 'row',
@@ -98,12 +121,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  groupTitle:{
+  groupTitle: {
     flexDirection: 'row',
     width: '30%',
     height: '100%',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   titleScreen: {
     color: "white",
@@ -120,7 +143,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   image: {
-    width: '30%',
+    width: '20%',
     height: 100,
     borderRadius: 8,
     marginRight: 10,
@@ -135,7 +158,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     width: '60%',
-    height: 50
+    height: 50,
+  },
+  groupButton: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '10%',
+    height: '100%',
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 50,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   navBar: {
     flexDirection: 'row',

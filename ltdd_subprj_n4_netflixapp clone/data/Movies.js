@@ -78,6 +78,48 @@ export default {
       ],
       "vote_average": 7.3,
       "vote_count": 954,
+      "cast": [
+        {
+          "id": 1,
+          "name": "Demi Moore",
+          "character": "Elisabeth",
+          "profile_path": [
+            require('./images/Casts/DemiMoore.png')
+          ],
+        },
+        {
+          "id": 2,
+          "name": "Margaret Qualley",
+          "character": "Sue",
+          "profile_path": [
+            require('./images/Casts/MargaretQualley.png')
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Dennis Quaid",
+          "character": "Harvey",
+          "profile_path": [
+            require('./images/Casts/DenisQuaid.png')
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Gore Abrams",
+          "character": "Oliver",
+          "profile_path": [
+            require('./images/Casts/GoreAbrams.png')
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Oscar Lesage",
+          "character": "Troy",
+          "profile_path": [
+            require('./images/Casts/OscarLessage.png')
+          ]
+        },
+      ]
     },
     {
       "backdrop_path": "/2K2iXKB5sDJ0V3Q6U6VBmuzCPXl.jpg",
@@ -99,7 +141,49 @@ export default {
         require('./videos/DontMove.mp4')
       ],
       "vote_average": 6.764,
-      "vote_count": 163
+      "vote_count": 163,
+      "cast": [
+        {
+          "id": 1,
+          "name": "Emma Stone",
+          "character": "Ava Greene",
+          "profile_path": [
+            require('./images/Casts/EmmaStone.png')
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Michael Fassbender",
+          "character": "Dr. William Harris",
+          "profile_path": [
+            require('./images/Casts/MichaelFassbender.png')
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Kelsey Asbille",
+          "character": "Iris",
+          "profile_path": [
+            require('./images/Casts/Keysel.png')
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Moray Treadwell",
+          "character": "Bill",
+          "profile_path": [
+            require('./images/Casts/Morray.png')
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Daniel Francis",
+          "character": "Dontrell",
+          "profile_path": [
+            require('./images/Casts/Daniel.png')
+          ]
+        },
+      ]
     },
     {
       "backdrop_path": "/begseNUKhZcc05Bc1UggaX5GeES.jpg",
@@ -126,34 +210,42 @@ export default {
       "cast": [
         {
           "id": 1,
-          "name": "Demi Moore",
-          "character": "Elisabeth",
+          "name": "Kate Beckinsale",
+          "character": "Avery Graves",
           "profile_path": [
-            require('./images/Casts/DemiMoore.png')
-          ]
+            require('./images/Casts/KateBeckinsale.png')
+          ],
         },
         {
           "id": 2,
-          "name": "Denis Quaid",
-          "character": "Harvey",
+          "name": "Rupet Friend",
+          "character": "David Brooks",
           "profile_path": [
-            require('./images/Casts/DenisQuaid.png')
+            require('./images/Casts/RupertFriend.png')
           ]
         },
         {
           "id": 3,
-          "name": "Chiwetel Ejiofor",
-          "character": "Strickland",
+          "name": "Ray Stevenson",
+          "character": "Jarvis Hedlund",
           "profile_path": [
-            require('./images/Casts/JunoTemple.png')
+            require('./images/Casts/RayStevenson.png')
           ]
         },
         {
           "id": 4,
-          "name": "Juno Temple",
-          "character": "Dr. Teddy Paine",
+          "name": "Ben Miles",
+          "character": "Nathan Evans",
           "profile_path": [
-            require('./images/Casts/ChiwetelEjiofor.png')
+            require('./images/Casts/BenMilles.png')
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Romina Tonkovic",
+          "character": "Sorina",
+          "profile_path": [
+            require('./images/Casts/RominaTonkovic.png')
           ]
         },
       ]
@@ -178,7 +270,49 @@ export default {
         require('./videos/Terifier3.mp4')
       ],
       "vote_average": 7.339,
-      "vote_count": 245
+      "vote_count": 245,
+      "cast": [
+        {
+          "id": 1,
+          "name": "Lauren LaVera",
+          "character": "Sienna",
+          "profile_path": [
+            require('./images/Casts/LaurenLavera.png')
+          ],
+        },
+        {
+          "id": 2,
+          "name": "David Howard Thornton",
+          "character": "Art the Clown",
+          "profile_path": [
+            require('./images/Casts/DavidHoward.png')
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Antonella Rose",
+          "character": "Gabbie",
+          "profile_path": [
+            require('./images/Casts/AntonellaRose.png')
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Samantha Scaffidi",
+          "character": "Victoria Heyes",
+          "profile_path": [
+            require('./images/Casts/SamanthaScaffidi.png')
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Magaret Anne Florence",
+          "character": "Jessica",
+          "profile_path": [
+            require('./images/Casts/MagaretAne.png')
+          ]
+        },
+      ]
     },
     {
       "backdrop_path": "/v9acaWVVFdZT5yAU7J2QjwfhXyD.jpg",
@@ -201,7 +335,49 @@ export default {
         require('./videos/TheWildRobotOfficialTrailer.mp4')
       ],
       "vote_average": 8.596,
-      "vote_count": 1769
+      "vote_count": 1769,
+      "cast": [
+        {
+          "id": 1,
+          "name": "Lupita Nyong'o",
+          "character": "Roz",
+          "profile_path": [
+            require('./images/Casts/LupitaNyong.png')
+          ],
+        },
+        {
+          "id": 2,
+          "name": "Pedro Pascal",
+          "character": "Flink",
+          "profile_path": [
+            require('./images/Casts/PedroPascal.png')
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Kit Connor",
+          "character": "Brightbill",
+          "profile_path": [
+            require('./images/Casts/KitConnor.png')
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Bill Nighy",
+          "character": "Longneck",
+          "profile_path": [
+            require('./images/Casts/BillNighy.png')
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Stephanie Hsu",
+          "character": "Vontra",
+          "profile_path": [
+            require('./images/Casts/StephanieHsu.png')
+          ]
+        },
+      ]
     },
     {
       "backdrop_path": "/yDHYTfA3R0jFYba16jBB1ef8oIt.jpg",
@@ -224,7 +400,49 @@ export default {
         require('./videos/Deadpool&Wolverine.mp4')
       ],
       "vote_average": 7.713,
-      "vote_count": 4848
+      "vote_count": 4848,
+      "cast": [
+        {
+          "id": 1,
+          "name": "Ryan Reynolds",
+          "character": "Wade Wilson",
+          "profile_path": [
+            require('./images/Casts/RyanReynolds.png')
+          ],
+        },
+        {
+          "id": 2,
+          "name": "Huge Jackman",
+          "character": "Logan",
+          "profile_path": [
+            require('./images/Casts/HughJackman.png')
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Emma Corrin",
+          "character": "Cassandra Nova",
+          "profile_path": [
+            require('./images/Casts/EmmaCorin.png')
+          ]
+        },
+        {
+          "id": 4,
+          "name": "Matthew Macfadyen",
+          "character": "Mr.Paradox",
+          "profile_path": [
+            require('./images/Casts/MathewMacfadyen.png')
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Dafne Keen",
+          "character": "Laura",
+          "profile_path": [
+            require('./images/Casts/DafneKeen.png')
+          ]
+        },
+      ]
     },
     {
       "backdrop_path": "/oPUOpnl3pqD8wuidjfUn17mO1yA.jpg",
@@ -246,10 +464,10 @@ export default {
       "popularity": 2359.914,
       "release_date": "2024-09-11",
       'video': [
-        require('./videos/TRANSFORMERSONE2024.mp4')
+        require('./videos/TRANSFORMERSONE.mp4')
       ],
       "vote_average": 8.079,
-      "vote_count": 372
+      "vote_count": 372,
     },
     {
       "backdrop_path": "/9SSEUrSqhljBMzRe4aBTh17rUaC.jpg",

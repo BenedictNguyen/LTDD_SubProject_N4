@@ -1,39 +1,39 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, FlatList, Pressable, Dimensions, ScrollView, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from "@react-navigation/native";
 
 const MoreScreen = () => {
   const navigation = useNavigation();
-  
-  {/* Hàm chọn user */}
-  const selectUser = (image)=> {
-    navigation.navigate('HomeScreen', {image})
+
+  {/* Hàm chọn user */ }
+  const selectUser = (image) => {
+    navigation.navigate('HomeScreen', { image })
   }
-  
-  return(
+
+  return (
     <View style={styles.container}>
       <View style={styles.subcontainer}>
         <Text style={styles.title}>Qui est-ce ?</Text>
         <View style={styles.screenCotainer}>
           <View style={styles.groupItem}>
-            <TouchableOpacity onPress={()=>navigation.navigate('HomeScreen', {image: require('../../data/images/UserAvatars/User1.png')})}>
-              <Image source={require('../../data/images/UserAvatars/User1.png')}/></TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen', { image: require('../../data/images/Onyeka.png') })}>
+              <Image source={require('../../data/images/Onyeka.png')} /></TouchableOpacity>
             <Text style={styles.titleItem}>User1</Text>
           </View>
           <View style={styles.groupItem}>
-            <TouchableOpacity onPress={()=>navigation.navigate('HomeScreen', {image: require('../../data/images/UserAvatars/User2.png')})}>
-              <Image source={require('../../data/images/UserAvatars/User2.png')}/></TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen', { image: require('../../data/images/Thelma.png') })}>
+              <Image source={require('../../data/images/Thelma.png')} /></TouchableOpacity>
             <Text style={styles.titleItem}>User2</Text>
           </View>
           <View style={styles.groupItem}>
-            <TouchableOpacity onPress={()=>navigation.navigate('HomeScreen', {image: require('../../data/images/UserAvatars/Kids.png')})}>
-              <Image source={require('../../data/images/UserAvatars/Kids.png')}/></TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen', { image: require('../../data/images/Kids.png') })}>
+              <Image source={require('../../data/images/Kids.png')} /></TouchableOpacity>
             <Text style={styles.titleItem}>Kids</Text>
           </View>
-           <View style={styles.groupItem}>
+          <View style={styles.groupItem}>
             <TouchableOpacity style={styles.addUser}>
-              <Icon name="add" color="white" size={30}/>
+              <Icon name="add" color="white" size={30} />
             </TouchableOpacity>
             <Text style={styles.titleItem}>Add new profile</Text>
           </View>

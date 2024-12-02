@@ -1,62 +1,67 @@
-import React, {useState} from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useNavigation} from '@react-navigation/native'
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ImageBackground } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { auth } from '../firebase.js';
+
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const [isChecked, setIsChecked] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      setErrorMessage('Please fill in all fields.');
+      return;
+    }
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      Alert.alert('Success', 'Logged in successfully!');
+      navigation.navigate('MoreScreen');
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  };
+
   return (
-    <ImageBackground 
-      source={require('../../assets/backgroundimg.png')} 
+    <ImageBackground
+      source={require('../../assets/backgroundimg.png')}
       style={styles.backgroundImage}
+      resizeMode="cover"
     >
       <View style={styles.container}>
-      {/*Header*/}
-        <TouchableOpacity style={styles.header}>
-          <Image style={styles.logo} source={require('../../assets/logo-netflix.png')} />
+        <Text style={styles.title}>Log In</Text>
+        <Text style={styles.subtitle}>
+          Enter your email and password to log in to your account.
+        </Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email address"
+          placeholderTextColor="#8c8c8c"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor="#8c8c8c"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
-
-      {/*Body*/}
-        <View style={styles.signInContainer}>
-          <Text style={styles.title}>Sign In</Text>
-          {/*Text Field*/}
-          <View style={styles.textField}>
-            <TextInput style={styles.textInput} placeholder='Email or mobile number' placeholderTextColor="#8c8c8c" />
-          </View>
-          <View style={styles.textField}>
-            <TextInput style={styles.textInput} placeholder='Password' placeholderTextColor="#8c8c8c" />
-          </View>
-
-          {/*Sign in button*/}
-          <TouchableOpacity style={styles.signInButton} onPress={()=>navigation.navigate('MoreScreen')}>
-            <Text style={styles.buttonTitle}>Sign In</Text>
-          </TouchableOpacity>
-          <Text style={styles.orText}>OR</Text>
-
-          {/*Sign in button 2*/}
-          <TouchableOpacity style={styles.signInButton2}>
-            <Text style={styles.buttonTitle}>Use a Sign-In Code</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.forgotPassword}>Forgot Password?</Text>
-          </TouchableOpacity>
-          <View style={styles.conditionBox}>
-            <TouchableOpacity 
-              style={styles.checkBox} 
-              onPress={() => setIsChecked(!isChecked)}>
-              {isChecked && (
-                <Icon name="check" size={20} color="#8c8c8c" />
-              )}
-            </TouchableOpacity>
-            <Text style={styles.title2}>Remember me</Text>
-          </View>
-          <View style={styles.conditionBox}>
-            <Text style={styles.title2}>New to Netflix? </Text>
-            <TouchableOpacity>
-              <Text style={styles.signUpText}>Sign up now.</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <TouchableOpacity
+          style={styles.linkButton}
+          onPress={() => navigation.navigate('Sign Up')}
+        >
+          <Text style={styles.linkText}>New to Netflix? Sign up now.</Text>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
@@ -65,113 +70,64 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    width: '100%',
-    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
     width: '100%',
-    paddingHorizontal: 20,
-  },
-  header: {
-    width: '100%',
-    height: 75,
-    padding: 12,
-  },
-  logo: {
-    width: 150,
-    height: 40,
-  },
-  signInContainer: {
-    justifyContent: 'space-around',
+    padding: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    borderRadius: 10,
     alignItems: 'center',
-    width: '30%',
-    paddingVertical: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    borderRadius: 8,
   },
   title: {
-    fontFamily: 'Roboto',
-    fontSize: 24,
-    fontWeight: '700',
-    color: 'white',
+    color: '#fff',
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
-  textField: {
-    width: '90%',
-    height: 50,
-    borderWidth: 1,
-    borderColor: '#8c8c8c',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginVertical: 10,
-    justifyContent: 'center',
+  subtitle: {
+    color: '#8c8c8c',
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 20,
   },
-  textInput: {
-    color: 'white',
+  input: {
     width: '100%',
-    height: '100%',
-    outlineStyle: 'none'
-  },
-  signInButton: {
-    width: '90%',
     height: 50,
+    backgroundColor: '#333',
+    borderRadius: 5,
+    marginBottom: 15,
+    paddingHorizontal: 10,
+    color: '#fff',
+    fontSize: 16,
+  },
+  button: {
     backgroundColor: '#e50914',
-    borderRadius: 8,
-    justifyContent: 'center',
+    paddingVertical: 15,
+    borderRadius: 5,
+    width: '100%',
     alignItems: 'center',
-    marginVertical: 10,
+    marginBottom: 20,
   },
-  buttonTitle: {
-    fontFamily: 'Roboto',
-    fontSize: 16,
-    fontWeight: '700',
-    color: 'white',
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
-  orText: {
-    fontSize: 16,
-    color: 'white',
-    marginVertical: 10,
+  linkButton: {
+    marginTop: 10,
   },
-  signInButton2: {
-    width: '90%',
-    height: 50,
-    backgroundColor: '#8c8c8c',
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-  forgotPassword: {
+  linkText: {
+    color: '#8c8c8c',
     fontSize: 14,
-    color: 'white',
-    marginVertical: 10,
+    textDecorationLine: 'underline',
   },
-  conditionBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '90%',
-    marginVertical: 5,
-  },
-  checkBox: {
-    width: 20,
-    height: 20,
-    borderWidth: 1,
-    borderColor: '#8c8c8c',
-    borderRadius: 2,
-    marginRight: 8,
-  },
-  title2: {
+  error: {
+    color: '#e50914',
     fontSize: 14,
-    color: 'white',
-  },
-  signUpText: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: 'white',
+    marginBottom: 10,
   },
 });
+
 export default LoginScreen;

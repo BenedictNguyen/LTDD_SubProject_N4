@@ -1,134 +1,139 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, FlatList, Dimensions, ScrollView, Modal, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Movie from '../../data/Movies';
 import People from '../../data/People';
 import TV from '../../data/TV';
+import NowPlaying from '../../data/NowPlaying'
+import TopRated from '../../data/TopRated'
 import { useNavigation } from '@react-navigation/native';
-
 const { width, height } = Dimensions.get('window');
+
+const Playing = () => {
+  const navigation = useNavigation();
+  return (
+    <FlatList
+      data={NowPlaying.results}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("HomeScreenDetails", {
+              item, // Truyền toàn bộ đối tượng `item` sang màn hình chi tiết
+            })
+          }
+          style={styles.movieItem}
+        >
+          <Image
+            source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
+            style={styles.movieImage}
+          />
+          <Text style={styles.movieTitle}>{item.title}</Text>
+        </TouchableOpacity>
+      )}
+      keyExtractor={(item) => item.id.toString()}
+      horizontal
+      showsHorizontalScrollIndicator={true}
+    />
+  );
+};
+
+const Top = () => {
+  const navigation = useNavigation();
+  return (
+    <FlatList
+      data={TopRated.results}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("HomeScreenDetails", {
+              item, // Truyền đối tượng item qua navigation
+            })
+          }
+          style={styles.movieItem}
+        >
+          <Image
+            source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
+            style={styles.movieImage}
+          />
+          <Text style={styles.movieTitle}>{item.title}</Text>
+        </TouchableOpacity>
+      )}
+      keyExtractor={(item) => item.id.toString()}
+      horizontal
+      showsHorizontalScrollIndicator={true}
+    />
+  );
+};
 
 const MoviesList = () => {
   const navigation = useNavigation();
-  const flatListRef = useRef(null);
-  // Hàm di chuyển danh sách
-  const scroll = (direction) => {
-    const offset = flatListRef.current?.contentOffset.x || 0;
-    flatListRef.current?.scrollToOffset({
-      offset: offset + direction * width * 0.8,
-      animated: true,
-    });
-  };
-
   return (
-    <View style={styles.listContainer}>
-      <TouchableOpacity onPress={()=>scroll(-1)} style={styles.scrollButton}>
-        <Icon name='chevron-left' size={30} color='white'/>
-      </TouchableOpacity>
-      <FlatList
-        ref={flatListRef}
-        data={Movie.results}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate("HomeScreenDetails", { item, cast: item.cast })}
-            style={styles.movieItem}
-          >
-            <Image
-              source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
-              style={styles.movieImage}
-            />
-            <Text style={styles.movieTitle}>{item.title}</Text>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) => item.id.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      />
-      <TouchableOpacity onPress={()=>scroll(1)} style={styles.scrollButton}>
-        <Icon name='chevron-right' size={30} color='white'/>
-      </TouchableOpacity>
-    </View>
+    <FlatList
+      data={Movie.results}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate("HomeScreenDetails", { item, cast: item.cast })}
+          style={styles.movieItem}
+        >
+          <Image
+            source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
+            style={styles.movieImage}
+          />
+          <Text style={styles.movieTitle}>{item.title}</Text>
+        </TouchableOpacity>
+      )}
+      keyExtractor={(item) => item.id.toString()}
+      horizontal
+      showsHorizontalScrollIndicator={true}
+    />
   );
 };
 
 const PeopleList = () => {
   const navigation = useNavigation();
-  const flatListRef = useRef(null);
-  // Hàm di chuyển danh sách
-  const scroll = (direction) => {
-    flatListRef.current?.scrollToOffset({
-      offset: flatListRef.current.contentOffset.x + direction * width * 0.8,
-      animated: true,
-    });
-  };
-
   return (
-    <View style={styles.listContainer}>
-      <TouchableOpacity onPress={()=>scroll(-1)} style={styles.scrollButton}>
-        <Icon name='chevron-left' size={30} color='white'/>
-      </TouchableOpacity>
-      <FlatList
-        data={People.results}
-        renderItem={({ item }) => (
+    <FlatList
+      data={People.results}
+      renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() => navigation.navigate("PeopleDetail", { item })}
           style={styles.movieItem}
         >
           <Image
             source={{ uri: `https://image.tmdb.org/t/p/w500${item.profile_path}` }}
-            style={styles.peopleImage}
+            style={styles.movieImage}
           />
-            <Text style={styles.movieTitle}>{item.name}</Text>
+          <Text style={styles.movieTitle}>{item.name}</Text>
         </TouchableOpacity>
-          )}
-        keyExtractor={(item) => item.id.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      />
-      <TouchableOpacity onPress={()=>scroll(1)} style={styles.scrollButton}>
-        <Icon name='chevron-right' size={30} color='white'/>
-      </TouchableOpacity>
-    </View>
+      )}
+      keyExtractor={(item) => item.id.toString()}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+    />
   );
 };
 
 const TVShowList = () => {
   const navigation = useNavigation();
-  const flatListRef = useRef(null);
-  // Hàm di chuyển danh sách
-  const scroll = (direction) => {
-    flatListRef.current?.scrollToOffset({
-      offset: flatListRef.current.contentOffset.x + direction * width * 0.8,
-      animated: true,
-    });
-  };
   return (
-    <View style={styles.listContainer}>
-      <TouchableOpacity onPress={()=>scroll(-1)} style={styles.scrollButton}>
-        <Icon name='chevron-left' size={30} color='white'/>
-      </TouchableOpacity>
-      <FlatList
-        data={TV.results}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate("TVShowDetails", { item })}
-            style={styles.movieItem}
-          >
-            <Image
-              source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
-              style={styles.tvShowImage}
-            />
-            <Text style={styles.movieTitle}>{item.name}</Text>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) => item.id.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      />
-      <TouchableOpacity onPress={()=>scroll(1)} style={styles.scrollButton}>
-        <Icon name='chevron-right' size={30} color='white'/>
-      </TouchableOpacity>
-    </View>
+    <FlatList
+      data={TV.results}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate("TVShowDetails", { item })}
+          style={styles.movieItem}
+        >
+          <Image
+            source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
+            style={styles.movieImage}
+          />
+          <Text style={styles.movieTitle}>{item.name}</Text>
+        </TouchableOpacity>
+      )}
+      keyExtractor={(item) => item.id.toString()}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+    />
   );
 };
 
@@ -138,10 +143,11 @@ const HomeScreen = ({ route }) => {
   const [searchText, setSearchText] = useState("");
   const { image } = route.params || {};
 
+
   const openSearchModal = () => setSearchModalVisible(true);
   const closeSearchModal = () => setSearchModalVisible(false);
 
-// Loc phim khi nhap vao ten phim
+  // Loc phim khi nhap vao ten phim
   const filteredMovies = Movie.results.filter(movie =>
     movie.title && movie.title.toLowerCase().includes(searchText.toLowerCase())
   );
@@ -149,26 +155,25 @@ const HomeScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.headerGroup1}>
-          <Image style={styles.logo} source={require('../../assets/logo-netflix.png')}/>
-           {/* Nav Bar */}
-           <View style={styles.navBar}>
-            <TouchableOpacity><Text style={styles.navBarTitle}>Home</Text></TouchableOpacity>
-            <TouchableOpacity><Text style={styles.navBarTitle}>TV Shows</Text></TouchableOpacity>
-            <TouchableOpacity><Text style={styles.navBarTitle}>Movies</Text></TouchableOpacity>
-            <TouchableOpacity><Text style={styles.navBarTitle}>Originals</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('MyListScreen')}><Text style={styles.navBarTitle}>My List</Text></TouchableOpacity>
+      <View style={{ justifyContent: 'space-between', alignItems: 'center', width: '100%', height: 100, backgroundColor: '#141414' }}>
+        <View style={styles.header}>
+          <Image style={styles.logo} source={require('../../assets/logo-netflix.png')} />
+          <View style={styles.headerIcons}>
+            <TouchableOpacity onPress={openSearchModal}>
+              <Icon name="search" color="white" size={25} style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Icon name="mic" color='white' size={25} style={styles.icon} />
+            </TouchableOpacity>
+            <Image style={styles.profileImage} source={image || require('../../assets/snack-icon.png')} />
           </View>
         </View>
-        <View style={styles.headerIcons}>
-          <TouchableOpacity onPress={openSearchModal}>
-            <Icon name="search" color="white" size={25} style={styles.icon} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Icon name="notifications" color="white" size={25} style={styles.icon} />
-          </TouchableOpacity>
-          <Image style={styles.profileImage} source={image || require('../../assets/snack-icon.png')} />
+        {/* Nav Bar */}
+        <View style={styles.navBar}>
+          <TouchableOpacity><Text style={styles.navBarTitle}>Home</Text></TouchableOpacity>
+          <TouchableOpacity><Text style={styles.navBarTitle}>TV Shows</Text></TouchableOpacity>
+          <TouchableOpacity><Text style={styles.navBarTitle}>Movies</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('MyListScreen')}><Text style={styles.navBarTitle}>My List</Text></TouchableOpacity>
         </View>
       </View>
 
@@ -183,7 +188,6 @@ const HomeScreen = ({ route }) => {
               value={searchText}
               onChangeText={setSearchText}
             />
-           
             <FlatList
               data={filteredMovies}
               renderItem={({ item }) => (
@@ -210,17 +214,23 @@ const HomeScreen = ({ route }) => {
 
       {/* Body */}
       <ScrollView>
-        <View style={{marginTop: 30, height: 500}}>
+        <View style={{ marginTop: 10 }}>
           {/* Sections */}
           <Section title="Trending Now" navigateTo="CommingTrending" navigation={navigation}>
             <MoviesList />
+          </Section>
+          <Section title="Now Playing" navigateTo="" navigation={navigation}>
+            <Playing />
+          </Section>
+          <Section title="Top Rated" navigateTo="" navigation={navigation}>
+            <Top />
           </Section>
           <Section title="People" navigateTo="People" navigation={navigation}>
             <PeopleList />
           </Section>
           <Section title="TV Shows" navigateTo="TVShowDetails" navigation={navigation}>
             <TVShowList />
-          </Section> 
+          </Section>
         </View>
       </ScrollView>
     </View>
@@ -233,7 +243,7 @@ const Section = ({ title, children, navigateTo, navigation }) => (
       <Text style={styles.sectionTitle}>{title}</Text>
       <TouchableOpacity style={styles.groupButtonAll} onPress={() => navigation.navigate(navigateTo)}>
         <Text style={styles.viewAll}>All</Text>
-        <Icon name='arrow-forward' size={24} color='#888'/>
+        <Icon name='arrow-forward' size={24} color='#888' />
       </TouchableOpacity>
     </View>
     {children}
@@ -244,20 +254,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
-    padding: 20,
+    padding: 5,
+    marginTop: 50
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
-    width: '100%'
-  },
-  headerGroup1: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    width: '30%',
+    backgroundColor: '#141414',
+    height: '50%',
+    width: '100%',
   },
   logo: {
     width: 150,
@@ -265,9 +272,7 @@ const styles = StyleSheet.create({
   },
   headerIcons: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
     alignItems: 'center',
-    width: 200,
   },
   icon: {
     marginHorizontal: 10,
@@ -279,24 +284,24 @@ const styles = StyleSheet.create({
   },
   navBar: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     paddingVertical: 10,
     height: '50%',
-    width: 500,
-    marginLeft: 50
+    width: '100%'
   },
   navBarTitle: {
     color: 'white',
     fontSize: 16,
   },
   section: {
-    paddingVertical: 20
+    marginBottom: 20,
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 10,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    width: '100%'
   },
   sectionTitle: {
     color: 'white',
@@ -305,7 +310,7 @@ const styles = StyleSheet.create({
   },
   groupButtonAll: {
     flexDirection: 'row',
-    width: '10%',
+    width: '20%',
     height: '100%',
     justifyContent: 'space-evenly',
     alignItems: 'center'
@@ -316,23 +321,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   movieItem: {
-    width: 200,
+    width: width * 0.3,
     marginRight: 10,
-    height: '100%'
   },
   movieImage: {
     width: '100%',
-    height: 300,
-    borderRadius: 5,
-  },
-  peopleImage: {
-    width: '100%',
-    height: 500,
-    borderRadius: 5,
-  },
-  tvShowImage: {
-    width: '100%',
-    height: 400,
+    height: height * 0.2,
     borderRadius: 5,
   },
   movieTitle: {
@@ -376,14 +370,6 @@ const styles = StyleSheet.create({
   searchResultItem: {
     alignItems: 'center',
     marginBottom: 15,
-  },
-  listContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  scrollButton: {
-    padding: 5,
   },
 });
 

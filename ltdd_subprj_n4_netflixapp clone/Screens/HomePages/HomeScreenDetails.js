@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Dimensions, FlatList, Image } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Movie from '../../data/Movies';
 import * as ScreenOrientation from "expo-screen-orientation";
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -12,12 +11,13 @@ export default function HomeScreenDetails({ navigation, route }) {
   const { item } = route.params;
   const [loading, setLoading] = useState(true);
   const videoRef = useRef(null);
-  const [isAdded, setIsAdded] = useState(false); //Trạng thái dùng để lưu phim
+  const [isAdded, setIsAdded] = useState(false); // Trạng thái dùng để lưu phim
 
   useEffect(() => {
     setLoading(false);
   }, []);
 
+  // Hàm set orientation màn hình
   function setOrientation() {
     if (Dimensions.get("window").height > Dimensions.get('window').width) {
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -36,7 +36,7 @@ export default function HomeScreenDetails({ navigation, route }) {
     }, [])
   );
 
-  {/* Add List function */}
+  // Hàm thêm phim vào danh sách của người dùng
   const addMyList = async () => {
     try {
       const response = await fetch('https://671988e77fc4c5ff8f4dafcc.mockapi.io/api', {
@@ -53,42 +53,43 @@ export default function HomeScreenDetails({ navigation, route }) {
       });
       if (response.ok) {
         setIsAdded(true);
-        console.log("Add completed!")
-      } else{
-        console.log('Add incompleted!')
+        console.log("Add completed!");
+      } else {
+        console.log('Add incompleted!');
       }
-    }catch (error) {
+    } catch (error) {
       console.log(error);
       console.log('Check your database');
     }
   };
 
-const PeopleList = () => {
-  const castData = Movie.results[0].cast;
-  return (
-    <FlatList
-      data={castData}
-      renderItem={({ item }) => (
-        <View style={styles.castListItem}>
-          <Image
-            source={
-              typeof item.profile_path === 'string'
-                ? { uri: `https://image.tmdb.org/t/p/w500${item.profile_path}` }
-                : item.profile_path[0]
-            }
-            style={styles.castImage}
-          />
-          <Text style={styles.castName}>{item.name}</Text>
-          <Text style={styles.castOriginalName}>{item.character}</Text>
-        </View>
-      )}
-      keyExtractor={(item) => item.id.toString()}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={styles.castListContainer}
-    />
-  );
-};
+  // Component render danh sách diễn viên
+  const PeopleList = () => {
+    const castData = item.cast; // Lấy danh sách cast từ item (dữ liệu của bộ phim hiện tại)
+    return (
+      <FlatList
+        data={castData}
+        renderItem={({ item }) => (
+          <View style={styles.castListItem}>
+            <Image
+              source={
+                typeof item.profile_path === 'string'
+                  ? { uri: `https://image.tmdb.org/t/p/w500${item.profile_path}` }
+                  : item.profile_path[0] // Nếu profile_path là mảng, lấy ảnh đầu tiên
+              }
+              style={styles.castImage}
+            />
+            <Text style={styles.castName}>{item.name}</Text>
+            <Text style={styles.castOriginalName}>{item.character}</Text>
+          </View>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.castListContainer}
+      />
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -115,25 +116,25 @@ const PeopleList = () => {
         </View>
         <Text style={styles.releaseDate}>Coming Soon on {item.release_date}</Text>
         <Text style={styles.description}>{item.overview}</Text>
-        
-        {/*Add List and Share*/}
+
+        {/* Add List and Share */}
         <View style={styles.listShareGroup}>
           <TouchableOpacity style={styles.addListGroup} onPress={addMyList} disabled={isAdded}>
-            <Icon name='add' color={isAdded ? 'white': 'white'} size={24}/>
+            <Icon name='add' color={isAdded ? 'white' : 'white'} size={24} />
             <Text style={styles.buttonTitle}>My List</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.addListGroup}>
-            <Icon name='share' color='white' size={24}/>
+            <Icon name='share' color='white' size={24} />
             <Text style={styles.buttonTitle}>Share</Text>
           </TouchableOpacity>
         </View>
-        
-        {/*Cast List*/}
+
+        {/* Cast List */}
         <View style={styles.castGroup}>
           <View style={styles.titleContainer}>
             <Text style={styles.castTitle}>Director - Cast</Text>
           </View>
-          <PeopleList />
+          <PeopleList /> {/* Render PeopleList component */}
         </View>
       </ScrollView>
       <View style={styles.footer}>
@@ -156,6 +157,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
     alignItems: 'center',
+    marginTop: 50
   },
   video: {
     width: '100%',
@@ -244,8 +246,8 @@ const styles = StyleSheet.create({
     width: '40%',
     height: 50
   },
-  addListGroup:{
-    width: 50,
+  addListGroup: {
+    width: 70,
     height: 30,
     justifyContent: 'center',
     alignItems: 'center'
